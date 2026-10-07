@@ -12,7 +12,6 @@ def get_db_connection():
     if not db_url:
         raise ValueError("Database connection URL missing. Ensure SUPABASE_DB_URL is defined inside your .env file.")
     
-    # Use standard library parser to perfectly isolate passwords containing special characters
     parsed_url = urlparse(db_url)
     
     user = parsed_url.username
@@ -21,7 +20,6 @@ def get_db_connection():
     port = parsed_url.port or 5432
     database = parsed_url.path.lstrip('/')
     
-    # Establish a native wire protocol connection
     connection = pg8000.native.Connection(
         user=user,
         password=password,

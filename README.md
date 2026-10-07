@@ -2,7 +2,7 @@
 
 A production-grade, modular machine learning pipeline that extracts consumer metadata over the wire from a cloud-hosted relational layer, executes leak-proof data transformations, and computes corporate customer retention margins using an optimized XGBoost ensemble engine.
 
-🔗 **Live Production Deployment URL:** [View the Live Application Dashboard](https://streamlit.io) *(👈 Paste your exact Streamlit browser URL here!)*
+🔗 **Live Production Deployment URL:** [View the Live Application Dashboard](https://telco-churn-pipeline-4t6axqfxufehuznsxnegx9.streamlit.app/) 
 
 ---
 

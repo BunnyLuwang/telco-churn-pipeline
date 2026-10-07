@@ -37,7 +37,7 @@ st.markdown("""
 st.write("---")
 
 # Layout segmentation blocks
-col1, col2 = st.columns()
+col1, col2 = st.columns(2)
 
 with col1:
     st.subheader("💡 Interactive ROI Business Calculator")

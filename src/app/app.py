@@ -1,40 +1,43 @@
 import streamlit as st
 import numpy as np
 import pandas as pd
-import sys
+import joblib
 import os
-
-# Interconnect existing modular modeling pipelines into backend interface 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
-from src.models.train_model import train_production_model
 
 # Page configuration layout
 st.set_page_config(page_title="Telco Churn Business ROI Engine", layout="wide")
 
 @st.cache_resource
-def load_cached_ml_pipeline():
-    """Trains and caches the ML pipeline infrastructure so the app stays lightning-fast."""
-    return train_production_model()
+def load_production_artifacts():
+    """Loads the pre-trained, serialized pipeline objects instantly to avoid database strain."""
+    base_dir = os.path.dirname(os.path.dirname(__file__))
+    preprocessor_path = os.path.join(base_dir, 'models', 'preprocessor.joblib')
+    model_path = os.path.join(base_dir, 'models', 'xgboost_model.joblib')
+    
+    # Load objects from local disk arrays
+    preprocessor = joblib.load(preprocessor_path)
+    model = joblib.load(model_path)
+    return preprocessor, model
 
-# Execute infrastructure engine
+# Execute structural artifacts load
 try:
-    preprocessor, model = load_cached_ml_pipeline()
-    st.sidebar.success("⚡ Production Machine Learning Engine Active")
+    preprocessor, model = load_production_artifacts()
+    st.sidebar.success("⚡ Production Machine Learning Engine Active (Serialized Mode)")
 except Exception as e:
-    st.error(f"Engine connection failed: {e}")
+    st.error(f"Failed to load production engine artifacts: {e}")
     st.stop()
 
 # Header block architecture
 st.title("📊 Production-Grade Telco Churn & Financial ROI Engine")
 st.markdown("""
 ### Enterprise Machine Learning Pipeline for Data-Driven Retention
-*This system uses a live cloud-hosted PostgreSQL server to extract customer metadata, runs it through an automated Scikit-Learn preprocessing pipeline, and scores churn risks using an XGBoost ensemble classifier.*
+*This system utilizes optimized static binary assets (`.joblib`) deployed on cloud container layers to process inputs and evaluate corporate customer retention margins in real-time.*
 """)
 
 st.write("---")
 
 # Layout segmentation blocks
-col1, col2 = st.columns([1, 2])
+col1, col2 = st.columns()
 
 with col1:
     st.subheader("💡 Interactive ROI Business Calculator")
@@ -48,18 +51,18 @@ with col1:
 with col2:
     st.subheader("🎯 Pipeline Performance Overview")
     
-    # Hardcoded performance figures pulled directly from our actual terminal validation matrices
+    # Structural KPI components
     kpi1, kpi2, kpi3 = st.columns(3)
     kpi1.metric("ROC-AUC Score", "84.3%", "Production Grade")
     kpi2.metric("True Positive Capture (Recall)", "81.0%", "Imbalance Resilient")
     kpi3.metric("Dataset Base Size", "7,043 Rows", "Supabase Cloud")
 
     # Financial Matrix Computations
-    total_eval_pool = 1409 # The validation split pool size from our code
-    historical_churners = 374 # Real churners in validation split
+    total_eval_pool = 1409
+    historical_churners = 374
     
     # Calculations based on model performance metrics
-    predicted_churners = int(historical_churners * 0.81) # Recall capture rate
+    predicted_churners = int(historical_churners * 0.81)
     prevented_churn_saves = int(predicted_churners * offer_acceptance_rate)
     
     # Financial balance equations
